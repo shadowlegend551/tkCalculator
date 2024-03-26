@@ -1,0 +1,29 @@
+# Button coordinates are in the form (x, y);
+# Upper left corner is (0, 0);
+
+# Control buttons;
+BUTTON_AC = 0, 0;
+BUTTON_BACKSPACE = 3, 0;
+BUTTON_ENTER = 3, 5;
+
+# Numeric button placements;
+BUTTON_0 = 1, 5;
+BUTTON_1 = 0, 4;
+BUTTON_2 = 1, 4;
+BUTTON_3 = 2, 4;
+BUTTON_4 = 0, 3;
+BUTTON_5 = 1, 3;
+BUTTON_6 = 2, 3;
+BUTTON_7 = 0, 2;
+BUTTON_8 = 1, 2;
+BUTTON_9 = 2, 2;
+
+# Operator button placements;
+BUTTON_ADD = 3, 4;
+BUTTON_SUB = 3, 3;
+BUTTON_MUL = 3, 2;
+BUTTON_DIV = 3, 1;
+BUTTON_EXP = 0, 1;
+BUTTON_LEFT_PAREN = 1, 1;
+BUTTON_RIGHT_PAREN = 2, 1;
+BUTTON_DECIMAL_POINT = 2, 5;
