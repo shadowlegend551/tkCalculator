@@ -113,12 +113,19 @@ class Gui:
 
 
     def calculate(self) -> None:
-        result = str(
-                 calculation(
-                 shunting_yard(
-                 tokenize_rpn(self.character_buffer))))
+        result = None
+        tokenized = tokenize_rpn(self.character_buffer)
+        parsed = shunting_yard(tokenized)
 
-        self.updateDisplay(str(result))
+        if parsed[0] == '\0':
+            result = parsed[1]
+
+        if not result:
+            calculated = calculation(parsed)
+            result = calculated[-1] if calculated[0] == '\0' \
+                                   else calculated[0]
+
+        self.updateDisplay(result)
         self.character_buffer = []
 
 

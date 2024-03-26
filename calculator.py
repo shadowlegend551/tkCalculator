@@ -1,4 +1,7 @@
-def calculation(rpn):
+def calculation(rpn: list) -> list:
+    if rpn == ['']:
+        return rpn
+
     tempstack = []  # Temporarily stores the rpn as it is read.
 
     for cval in rpn:
@@ -7,21 +10,22 @@ def calculation(rpn):
             tempstack.append(cval)
 
         elif isinstance(cval,str):
-            try:
-                sval = tempstack.pop(-1)  # Second value.
-                fval = tempstack.pop(-1)  # First value.
-            except IndexError:
-                return ''
+            if len(tempstack) >= 2:
+                second_value = tempstack.pop(-1)  # Second value.
+                first_operator = tempstack.pop(-1)  # First value.
+            else:
+                return ['\0', f'LONELY "{cval}"']
 
             if cval == '+':
-                tempstack.append(fval + sval)
+                tempstack.append(first_operator + second_value)
             elif cval == '-':
-                tempstack.append(fval - sval)
+                tempstack.append(first_operator - second_value)
             elif cval == '*':
-                tempstack.append(fval * sval)
+                tempstack.append(first_operator * second_value)
             elif cval == '/':
-                tempstack.append(fval / sval)
+                if second_value == 0: return ['\0', 'ZERO DIVISION']
+                tempstack.append(first_operator / second_value)
             elif cval == '^':
-                tempstack.append(fval ** sval)
+                tempstack.append(first_operator ** second_value)
 
-    return round(tempstack[0],3)
+    return [str(round(tempstack[0],3))]
