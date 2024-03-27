@@ -15,5 +15,9 @@ class Queue:
         return self.queue[0] if len(self.queue) else None
 
 
+    def length(self) -> int:
+        return len(self.queue)
+
+
     def isEmpty(self) -> bool:
         return False if len(self.queue) else True
