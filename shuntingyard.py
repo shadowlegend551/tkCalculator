@@ -1,54 +1,56 @@
 from stack import Stack
+from queue import Queue
 
 
-def shunting_yard(Input: list) -> list:
-    if Input == []:
-        return ['']
+def shunting_yard(Input: Queue) -> list:
+    if Input.isEmpty():
+        return Stack([''])
 
     unclosed_parentheses = 0
     basic_operators = ('+', '-', '^', '*', '/')
     lower_predence = basic_operators[:2]
     higher_predence = basic_operators[3:]
-    opstack = []  # Output.
-    stack = []
+    opstack = Stack()
+    stack = Stack()
 
-    for cval in Input:
+    for cval in Input.queue:
 
         if isinstance(cval,int) or isinstance(cval,float):
-            opstack.append(cval)
+            opstack.push(cval)
 
         elif cval == '(':
             if ')' not in Input:
                 return ['\0', 'UNCLOSED "("']
-            stack.append(cval)
+            stack.push(cval)
             unclosed_parentheses += 1
 
         elif cval == ')':
             if '(' not in stack:
                 return ['\0', 'UNMATCHING ")"']
 
-            while stack[-1] != '(':
-                opstack.append(stack.pop(-1))
-            del stack[-1]
+            while stack.check() != '(':
+                opstack.append(stack.pop())
+            stack.pop()
 
             unclosed_parentheses -= 1
 
         elif cval in lower_predence:
-            if len(stack) > 0 and '(' not in stack:
-                for i in range(len(stack)):
-                    opstack.append(stack.pop(-1))
-            stack.append(cval)
+            if not stack.isEmpty() and '(' not in stack.stack:
+                for i in range(stack.length()):
+                    opstack.push(stack.pop())
+            stack.push(cval)
 
         elif cval in higher_predence:
-            if len(stack) > 0:
-                if '(' not in stack or stack[-1] in lower_predence:
-                    while stack[-1] in higher_predence or stack[-1] == '^':
-                        opstack.append(stack.pop(-1))
-            stack.append(cval)
+            if not stack.isEmpty():
+                if '(' not in stack.stack or stack.check() in lower_predence:
+                    while stack.check() in higher_predence or stack.check() == '^':
+                        opstack.append(stack.pop())
+            stack.push(cval)
 
         elif cval == '^':
-            stack.append(cval)
+            stack.push(cval)
 
-    for i in range(len(stack)):
-        opstack.append(stack.pop(-1))
-    return opstack
+    for i in range(stack.length()):
+        opstack.push(stack.pop())
+    return opstack.stack
+

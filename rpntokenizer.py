@@ -2,25 +2,26 @@ from queue import Queue
 
 
 
-def tokenize_rpn(Input: list) -> list:
+def tokenize_rpn(Input: list) -> Queue:
     operators = ['+', '-', '(', ')', '*', '/', '^']
-    output = []
+    output = Queue()
+    Input = Queue(Input)
 
 
-    while len(Input):
-        current_token = Input.pop(0)
+    while not Input.isEmpty():
+        current_token = Input.pop()
 
         if current_token.isdigit():
-            while len(Input) and Input[0].isdigit():
-                current_token += Input.pop(0)
-            if len(Input) and Input[0] == '.':
-                current_token += Input.pop(0)
-                while len(Input) and Input[0].isdigit():
-                    current_token += Input.pop(0)
+            while not Input.isEmpty() and Input.check().isdigit():
+                current_token += Input.pop()
+            if not Input.isEmpty() and Input.check() == '.':
+                current_token += Input.pop()
+                while not Input.isEmpty() and Input.check().isdigit():
+                    current_token += Input.pop()
 
             current_token = float(current_token) if '.' in current_token \
                                                  else int(current_token)
 
-        output.append(current_token)
+        output.push(current_token)
 
     return output
