@@ -19,17 +19,17 @@ def shunting_yard(Input: Queue) -> list:
             opstack.push(cval)
 
         elif cval == '(':
-            if ')' not in Input:
+            if ')' not in Input.queue:
                 return ['\0', 'UNCLOSED "("']
             stack.push(cval)
             unclosed_parentheses += 1
 
         elif cval == ')':
-            if '(' not in stack:
+            if '(' not in stack.stack:
                 return ['\0', 'UNMATCHING ")"']
 
             while stack.check() != '(':
-                opstack.append(stack.pop())
+                opstack.push(stack.pop())
             stack.pop()
 
             unclosed_parentheses -= 1
