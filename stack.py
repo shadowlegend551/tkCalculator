@@ -1,6 +1,6 @@
 class Stack:
-    def __init__(self):
-        self.stack = []
+    def __init__(self, start_value=[]):
+        self.stack = start_value
 
 
     def push(self, value) -> None:
@@ -8,8 +8,12 @@ class Stack:
 
 
     def pop(self):
-        return self.stack.pop(-1) if len(stack) else None
+        return self.stack.pop(-1) if len(self.stack) else None
 
 
     def check(self):
-        return self.stack[-1] if len(stack) else None
+        return self.stack[-1] if len(self.stack) else None
+
+
+    def isEmpty(self) -> bool:
+        return False if len(self.stack) else True
