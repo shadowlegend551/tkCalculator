@@ -1,3 +1,6 @@
+from stack import Stack
+
+
 def shunting_yard(Input: list) -> list:
     if Input == []:
         return ['']

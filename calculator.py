@@ -1,3 +1,6 @@
+from stack import Stack
+
+
 def calculation(rpn: list) -> list:
     if rpn == ['']:
         return rpn
