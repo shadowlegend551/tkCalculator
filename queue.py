@@ -1,6 +1,9 @@
 class Queue:
-    def __init__(self, start_value=[]):
-        self.queue = start_value
+    # Different queue instances share the same start_value list
+    # in memory if directly set!???!??!?!?!?!?
+    # Have to create a new list instance for each queue instance.
+    def __init__(self, start_value=None):  # start_value=[] causes a problem.
+        self.queue = [] if start_value == None else start_value
 
 
     def push(self, value) -> None:

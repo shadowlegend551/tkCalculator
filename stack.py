@@ -1,6 +1,9 @@
 class Stack:
-    def __init__(self, start_value=[]):
-        self.stack = start_value
+    # Different stack instances share the same start_value list
+    # in memory if directly set!???!??!?!?!?!?
+    # Have to create a new list instance for each stack instance.
+    def __init__(self, start_value=None):  # start_value=[] causes a problem.
+        self.stack = [] if start_value == None else start_value
 
 
     def push(self, value) -> None:
@@ -21,3 +24,4 @@ class Stack:
 
     def isEmpty(self) -> bool:
         return False if len(self.stack) else True
+
