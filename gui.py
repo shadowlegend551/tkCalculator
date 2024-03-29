@@ -88,21 +88,6 @@ class Gui:
         self.root.mainloop()
 
 
-    def createGuiButton(self,
-                     text: str,
-                     callback,
-                     height=BUTTON_HEIGHT,
-                     width=BUTTON_WIDTH) -> None:
-
-        button = tk.Button(self.root,
-                           text=text,
-                           height=height,
-                           width=width,
-                           justify=tk.CENTER,
-                           command=lambda: callback())
-        return button
-
-
     def backspace(self) -> None:
         if len(self.character_buffer):
             del self.character_buffer[-1]
@@ -129,6 +114,21 @@ class Gui:
         self.character_buffer = []
 
 
+    def createGuiButton(self,
+                     text: str,
+                     callback,
+                     height=BUTTON_HEIGHT,
+                     width=BUTTON_WIDTH) -> None:
+
+        button = tk.Button(self.root,
+                           text=text,
+                           height=height,
+                           width=width,
+                           justify=tk.CENTER,
+                           command=lambda: callback())
+        return button
+
+
     def createLayout(self, settings_file: str) -> None:
         with open(settings_file, 'r') as file:
             self.settings = parse_config(file.read())
@@ -144,6 +144,13 @@ class Gui:
     def emptyInput(self) -> None:
         self.character_buffer = []
         self.updateDisplay()
+
+
+    def getCharCallbackFunction(self, char: str) -> None:
+        def addToDisplay() -> None:
+            self.character_buffer.append(char)
+            self.updateDisplay()
+        return addToDisplay
 
 
     def gridButton(self, button, coordinate_pair: tuple) -> None:
@@ -163,9 +170,3 @@ class Gui:
         # characters out of bounds.
         self.display.config(text=text[-DISPLAY_WIDTH:])
 
-
-    def getCharCallbackFunction(self, char: str) -> None:
-        def addToDisplay() -> None:
-            self.character_buffer.append(char)
-            self.updateDisplay()
-        return addToDisplay
